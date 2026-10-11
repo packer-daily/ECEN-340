@@ -1,0 +1,50 @@
+* Qucs 26.1.0  /Users/packerdaily/Documents/ECEN/ECEN340/Lab3/log.txt.sch
+.INCLUDE "/Users/packerdaily/Documents/ECEN/ECEN340/Lab2/MCP6001.lib"
+V1 VDC vn DC 3.3 SIN(3.3 30M 1481 0 0 0) AC 30M ACPHASE 0
+Is VDC in  DC 0 SIN(0 40N 2K 0 0 0) AC 40N ACPHASE 0
+In3 VDC in  DC 0 SIN(0 400N 20K 0 0 0) AC 400N ACPHASE 0
+In2 VDC in  DC 0 SIN(0 400N 100 0 0 0) AC 400N ACPHASE 0
+In1 VDC in DC 1M
+R1 vn in  2.7K tc1=0.0 tc2=0.0 
+D1 in VDC DMOD_D1 AREA=1.0
+.MODEL DMOD_D1 D (Is=1.2 N=2 Cj0=10F M=0.5 Vj=0.7 Fc=0.5 Rs=0.0 Tt=0.0P Kf=0.0 Af=1.0 Bv=10 Ibv=1M Xti=3.0 Eg=1.11 Tcv=0.0 Trs=0.0 Ttt1=0.0 Ttt2=0.0 Tm1=0.0 Tm2=0.0 Tnom=26.85 )
+XX4  _net0 _net1 vp vn out MCP6001 
+R18 VDC vp  100 tc1=0.0 tc2=0.0 
+C9 0 vp  1M 
+C11 vn 0  1M 
+XX3  out1 _net3 vp vn out3 MCP6001 
+R13 0 _net3  1K tc1=0.0 tc2=0.0 
+C6 in out1  .159UF 
+R16 0 out1  1K tc1=0.0 tc2=0.0 
+R11 _net3 out3  200K tc1=0.0 tc2=0.0 
+C8 out3 _net2  .159UF 
+R17 0 _net2  1000 tc1=0.0 tc2=0.0 
+R12 _net1 out  200K tc1=0.0 tc2=0.0 
+C15 _net3 out3  .198NF 
+C16 _net1 out  .198NF 
+R19 0 vp  10K tc1=0.0 tc2=0.0 
+R20 vn 0  10K tc1=0.0 tc2=0.0 
+C17 _net2 _net0  .198NF 
+R21 _net0 0  200K tc1=0.0 tc2=0.0 
+C12 vn 0  1000N 
+C10 0 vp  1000N 
+R14 0 _net1  375 tc1=0.0 tc2=0.0 
+
+.control
+
+ac dec 50 1 10k 
+let gain = dB(V(out)/V(in))
+write spice4qucs.ac1.plot v(VDC) v(in) v(out) v(out1) v(out3) v(vn) v(vp) gain
+destroy all
+reset
+
+tran 0.000452261 0.1 0.01 
+let vin = maximum(V(in)) - minimum(V(in))
+let vout = maximum(V(out)) - minimum(V(out))
+write spice4qucs.tr1.plot v(VDC) v(in) v(out) v(out1) v(out3) v(vn) v(vp) vin vout
+destroy all
+reset
+
+exit
+.endc
+.END
