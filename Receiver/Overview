@@ -1,7 +1,11 @@
-This is the folder for receiver elements of the lab.
+This is the folder for receiver elements of the lab. 
 Current Contents
   -ngspice models for the passing bandpass filter.
-  -photographs of the not yet working physical board model
+  -photographs of the not-yet-working physical board model
 
 LAB JOURNAL ENTRIES
+8/8
+Circuit tests with Jaden. Capacitor value incorrect; shop closed. Exchange on Monday.
 
+8/12
+Corrected the capacitors from 22 uF to 220 nF. Wiring cleaned up, and element ends trimmed.
